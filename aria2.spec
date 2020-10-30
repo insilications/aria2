@@ -4,7 +4,7 @@
 #
 Name     : aria2
 Version  : 1.34.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/aria2/aria2/releases/download/release-1.34.0/aria2-1.34.0.tar.xz
 Source0  : https://github.com/aria2/aria2/releases/download/release-1.34.0/aria2-1.34.0.tar.xz
 Summary  : High speed download utility library
@@ -79,32 +79,36 @@ man components for the aria2 package.
 
 %prep
 %setup -q -n aria2-1.34.0
+cd %{_builddir}/aria2-1.34.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1558376570
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604091690
 export GCC_IGNORE_WERROR=1
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1558376570
+export SOURCE_DATE_EPOCH=1604091690
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/aria2
-cp COPYING %{buildroot}/usr/share/package-licenses/aria2/COPYING
-cp LICENSE.OpenSSL %{buildroot}/usr/share/package-licenses/aria2/LICENSE.OpenSSL
-cp deps/wslay/COPYING %{buildroot}/usr/share/package-licenses/aria2/deps_wslay_COPYING
+cp %{_builddir}/aria2-1.34.0/COPYING %{buildroot}/usr/share/package-licenses/aria2/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1
+cp %{_builddir}/aria2-1.34.0/LICENSE.OpenSSL %{buildroot}/usr/share/package-licenses/aria2/2b7ed594a25796f84812c487da49ea6f9260a979
+cp %{_builddir}/aria2-1.34.0/deps/wslay/COPYING %{buildroot}/usr/share/package-licenses/aria2/244f0f3e67f4ed26ff65034c3db122d413cdef97
 %make_install
 %find_lang aria2
 
@@ -121,9 +125,9 @@ cp deps/wslay/COPYING %{buildroot}/usr/share/package-licenses/aria2/deps_wslay_C
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/aria2/COPYING
-/usr/share/package-licenses/aria2/LICENSE.OpenSSL
-/usr/share/package-licenses/aria2/deps_wslay_COPYING
+/usr/share/package-licenses/aria2/244f0f3e67f4ed26ff65034c3db122d413cdef97
+/usr/share/package-licenses/aria2/2b7ed594a25796f84812c487da49ea6f9260a979
+/usr/share/package-licenses/aria2/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1
 
 %files man
 %defattr(0644,root,root,0755)
