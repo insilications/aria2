@@ -1,2 +1,16 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
+nettle-dev
+nettle-staticdev
+pkg-config
+openssl-dev
+openssl-staticdev
+zlib-dev
+zlib-staticdev
+sqlite-autoconf-dev
+sqlite-autoconf-staticdev
+libxml2-dev
+libxml2-staticdev
+gnutls-dev
+gnutls-staticdev
+c-ares-dev
