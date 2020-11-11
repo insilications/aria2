@@ -1,0 +1,13 @@
+diff --git a/src/UriListParser.cc b/src/UriListParser.cc
+index ca021cb3..775197cd 100644
+--- a/src/UriListParser.cc
++++ b/src/UriListParser.cc
+@@ -112,7 +112,7 @@ void UriListParser::parseNext(std::vector<std::string>& uris, Option& op)
+ bool UriListParser::hasNext()
+ {
+   bool rv = !line_.empty() || (fp_ && *fp_ && !fp_->eof());
+-  if (!rv) {
++  if (!rv && fp_) {
+     fp_->close();
+   }
+   return rv; 

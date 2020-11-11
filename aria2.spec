@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : aria2
 Version  : 2
-Release  : 4
+Release  : 5
 URL      : file:///insilications/build/clearlinux/packages/aria2/aria2-2.tar.gz
 Source0  : file:///insilications/build/clearlinux/packages/aria2/aria2-2.tar.gz
 Summary  : High speed download utility library
@@ -47,6 +47,7 @@ BuildRequires : zlib-staticdev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: pp.patch
 
 %description
 
@@ -108,6 +109,7 @@ staticdev components for the aria2 package.
 %prep
 %setup -q -n aria2
 cd %{_builddir}/aria2
+%patch1 -p1
 pushd ..
 cp -a aria2 build-special
 popd
@@ -118,7 +120,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1605048370
+export SOURCE_DATE_EPOCH=1605073099
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC"
@@ -190,7 +192,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1605048370
+export SOURCE_DATE_EPOCH=1605073099
 rm -rf %{buildroot}
 pushd ../build-special/
 %make_install_special
